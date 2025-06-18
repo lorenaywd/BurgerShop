@@ -42,9 +42,6 @@ const prenom = ref('Romain');
       <p>{{ item.description }}</p>
 
       <div class="quantity-row">
-        <div>
-          <!-- Tu pourras remettre tes boutons ici -->
-        </div>
       </div>
 
       <button class="commander" @click="">Commander</button>
@@ -57,7 +54,7 @@ const prenom = ref('Romain');
 <style>
 .burger-list {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* 3 cartes par ligne */
+  grid-template-columns: repeat(3, 1fr);
   gap: 20px;
 }
 
