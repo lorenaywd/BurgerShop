@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Modal from '@/components/Modal.vue';
-import Hello from '@/components/HelloWorld.vue';
-import HomePage from '@/components/HomePage.vue';;
+import Order from '@/components/OrderForm.vue';
+import HomePage from '@/components/HomePage.vue';
 import path = require('path');
 
 
@@ -9,15 +9,28 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Hello,
+    component: HomePage,
   },
   {
     path: '/modal',
     name: 'Modal',
-    component:  Modal,
+    component: Modal,
   },
-  {path: '/carte', name: 'Carte', component: HomePage},
- 
+  {
+    path: '/order',
+    name: 'Order',
+    component: Order,
+  },
+  {
+    path: '/carte',
+    name: 'Carte',
+    component: HomePage
+  },
+  {
+    path: '/burgers/:type',
+    name: 'Burgers',
+    component: HomePage,
+  }
 ];
 
 const router = createRouter({

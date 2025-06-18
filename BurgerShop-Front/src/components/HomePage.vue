@@ -1,18 +1,17 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import NavBar from './NavBar.vue';
-import burger from '../assets/burger.jpg';
 
 const items = ref([
-  { id: 1, nom: 'Burger basique', image: burger, description: 'Un burger des plus basique', type: 'boeuf' },
-  { id: 2,nom: 'Burger 2 fromages', image: burger, description: 'Deux fromages pour + de plaisir', type: 'boeuf' },
-  { id: 3,nom: 'Burger poulet', image: burger, description: 'Un burger avec du poulet', type: 'boeuf' },
-  { id: 4,nom: 'Burger végétarien', image: burger, description: 'Un burger pour les végétariens', type: 'vegetarien' },
-  { id: 5,nom: 'Burger épicé', image: burger, description: 'Un burger pour les amateurs de sensations fortes', type: 'boeuf' },
-  { id: 6,nom: 'Burger double', image: burger, description: 'Un burger avec deux steaks', type: 'boeuf' },
-  { id: 7,nom: 'Burger BBQ', image: burger, description: 'Un burger avec une sauce BBQ maison', type: 'boeuf' },
-  { id: 8,nom: 'Burger gourmet', image: burger, description: 'Un burger haut de gamme avec des ingrédients raffinés', type: 'boeuf' },
-  { id: 9,nom: 'Burger au saumon', image: burger, description: 'Un burger avec du saumon frais', type: 'poisson' }
+  { id: 1, nom: 'Burger basique', image: "src/assets/burger.jpg", description: 'Un burger des plus basique', type: 'boeuf' },
+  { id: 2,nom: 'Burger 2 fromages', image: "src/assets/burger.jpg", description: 'Deux fromages pour + de plaisir', type: 'boeuf' },
+  { id: 3,nom: 'Burger poulet', image: "src/assets/burger.jpg", description: 'Un burger avec du poulet', type: 'boeuf' },
+  { id: 4,nom: 'Burger végétarien', image: "src/assets/burger.jpg", description: 'Un burger pour les végétariens', type: 'vegetarien' },
+  { id: 5,nom: 'Burger épicé', image: "src/assets/burger.jpg", description: 'Un burger pour les amateurs de sensations fortes', type: 'boeuf' },
+  { id: 6,nom: 'Burger double', image: "src/assets/burger.jpg", description: 'Un burger avec deux steaks', type: 'boeuf' },
+  { id: 7,nom: 'Burger BBQ', image: "src/assets/burger.jpg", description: 'Un burger avec une sauce BBQ maison', type: 'boeuf' },
+  { id: 8,nom: 'Burger gourmet', image: "src/assets/burger.jpg", description: 'Un burger haut de gamme avec des ingrédients raffinés', type: 'boeuf' },
+  { id: 9,nom: 'Burger au saumon', image: "src/assets/burger.jpg", description: 'Un burger avec du saumon frais', type: 'poisson' }
 ])
 const prenom = ref('Romain');
 </script>
@@ -30,7 +29,7 @@ const prenom = ref('Romain');
         <p>Découvrez nos délicieux burgers faits maison !</p>
       </header>
 
-      <img src="./icons/burgerAccueil.jpg" alt="Burger image"
+      <img src="../assets/burgerAccueil.jpg" alt="Burger image"
         style="width: 60%; border-radius: 8px; margin-bottom: 20px;">
 
       <h2>Notre menu</h2>
