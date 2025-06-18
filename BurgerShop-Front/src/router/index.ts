@@ -3,7 +3,6 @@ import Modal from '@/components/Modal.vue';
 import Hello from '@/components/HelloWorld.vue';
 import Order from '@/components/OrderForm.vue';
 
-
 const routes = [
   {
     path: '/',

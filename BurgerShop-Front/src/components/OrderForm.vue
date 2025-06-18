@@ -74,15 +74,21 @@ const submitOrder = async () => {
 .form-container {
   width: 500px;
   height: 600px;
-  margin: auto;
-  margin-left: 100%;
+  margin-top: 1%;
+  margin-left: 150%;
   padding: 2rem;
   background: #fff;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
+h1{
+   font-family: 'Lilita One', cursive;
+   font-size: 5rem;
+}
 h2{
-  font-size: 30px
+  font-size: 30px;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: bold;
 }
 label {
   display: block;
