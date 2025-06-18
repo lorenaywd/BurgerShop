@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import burger from "./icons/burger.jpg";
-import NavBar from "./NavBar.vue"
+import NavBar from './NavBar.vue';
+import burger from '../assets/burger.jpg';
 
 const items = ref([
   { id: 1, nom: 'Burger basique', image: burger, description: 'Un burger des plus basique', type: 'boeuf' },
