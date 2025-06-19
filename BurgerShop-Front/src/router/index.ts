@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import Modal from '@/components/Modal.vue';
 import Order from '@/components/OrderForm.vue';
 import HomePage from '@/components/HomePage.vue';
+import Confirmation from '@/components/Confirmation.vue';
 
 
 const routes = [
@@ -26,9 +27,9 @@ const routes = [
     component: HomePage
   },
   {
-    path: '/burgers/:type',
-    name: 'Burgers',
-    component: HomePage,
+    path: '/confirmation/:orderId',
+    name: 'Confirmation',
+    component: Confirmation
   }
 ];
 

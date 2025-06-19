@@ -1,11 +1,20 @@
 <script setup lang="ts">
-import { onMounted, ref, watch } from 'vue';
+import { onMounted, ref, watch, watchEffect } from 'vue';
 import NavBar from './NavBar.vue';
 import axios from 'axios';
 import { useRoute } from 'vue-router';
 
 const route = useRoute();
-const items = ref([]);
+const items = ref<Burger[]>([]);
+
+type Burger = {
+  id: number;
+  name: string;
+  image: string;
+  description: string;
+  type: string;
+  price: number;
+};
 
 const fetchMenu = async () => {
   const type = route.params.type;
@@ -29,7 +38,6 @@ onMounted(fetchMenu);
 
 watch(() => route.params.type, fetchMenu);
 
-const prenom = ref('Romain');
 import WelcomeModal from './Modal.vue';
 import TopNavBar from './TopNavbar.vue';
 import { useRouter } from 'vue-router'
@@ -38,13 +46,12 @@ const router = useRouter()
 const prenom = ref('');
 
 onMounted(() => {
-  const stored = localStorage.getItem('burgerShopUser');
-  if (stored) {
-    const data = JSON.parse(stored);
-    if (data.name && Date.now() < data.expiresAt) {
-      prenom.value = data.name;
-    }
-  }
+  const saved = JSON.parse(localStorage.getItem('cart') || '[]');
+  const totalCount = saved.reduce((acc: number, item: any) => {
+    const quantity = Number(item.quantity) || 1;
+    return acc + quantity;
+  }, 0);
+  cartCount.value = totalCount;
 });
 
 const handleNameSet = (name: string) => {
@@ -55,28 +62,12 @@ const handleOpenCart = () => {
   router.push('/order')
 }
 
-const cart = ref<any[]>([]);
+const addToCart = (burger: Burger) => {
+  const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+  cart.push(burger);
+  localStorage.setItem('cart', JSON.stringify(cart));
+};
 
-function addToCart(item) {
-  const found = cart.value.find(i => i.id === item.id);
-  if (found) {
-    found.quantity += 1;
-  } else {
-    cart.value.push({ ...item, quantity: 1 });
-  }
-  cartCount.value++;
-}
-const items = ref([
-  { id: 1, nom: 'Burger basique', image: "src/assets/burger1.png", description: 'Un burger des plus basique', type: 'boeuf' },
-  { id: 2, nom: 'Burger 2 fromages', image: "src/assets/burger3.png", description: 'Deux fromages pour + de plaisir', type: 'boeuf' },
-  { id: 3, nom: 'Burger poulet', image: "src/assets/burger10.png", description: 'Un burger avec du poulet', type: 'boeuf' },
-  { id: 4, nom: 'Burger végétarien', image: "src/assets/burger2.png", description: 'Un burger pour les végétariens', type: 'vegetarien' },
-  { id: 5, nom: 'Burger épicé', image: "src/assets/burger4.png", description: 'Un burger pour les amateurs de sensations fortes', type: 'boeuf' },
-  { id: 6, nom: 'Burger double', image: "src/assets/burger5.png", description: 'Un burger avec deux steaks', type: 'boeuf' },
-  { id: 7, nom: 'Burger BBQ', image: "src/assets/burger8.png", description: 'Un burger avec une sauce BBQ maison', type: 'boeuf' },
-  { id: 8, nom: 'Burger gourmet', image: "src/assets/burger6.png", description: 'Un burger haut de gamme avec des ingrédients raffinés', type: 'boeuf' },
-  { id: 9, nom: 'Burger au saumon', image: "src/assets/burger14.png", description: 'Un burger avec du saumon frais', type: 'poisson' }
-]);
 </script>
 
 <template>
@@ -98,13 +89,13 @@ const items = ref([
       <div class="burger-list">
         <div v-for="(item, index) in items" :key="index" class="card">
           <img :src="item.image" alt="Burger image" class="card-img">
-          <h3>{{ item.nom }}</h3>
+          <h3>{{ item.name }}</h3>
           <p>{{ item.description }}</p>
 
           <div class="quantity-row">
           </div>
 
-          <button class="commander" @click="">Commander</button>
+          <button class="commander" @click="addToCart(item)">Commander</button>
         </div>
       </div>
     </div>

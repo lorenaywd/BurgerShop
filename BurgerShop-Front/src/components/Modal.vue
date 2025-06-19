@@ -22,7 +22,7 @@ const firstName = ref("");
 
 const saveName = () => {
   if (firstName.value.trim()) {
-    const expirationTime = Date.now() + 30 * 1000; // 1 min pour tests
+    const expirationTime = Date.now() + 30 * 10000; // 1 min pour tests
     const userData = {
       name: firstName.value,
       expiresAt: expirationTime,
