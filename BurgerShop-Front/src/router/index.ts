@@ -1,25 +1,34 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Modal from '@/components/Modal.vue';
-import Hello from '@/components/HelloWorld.vue';
 import Order from '@/components/OrderForm.vue';
+import HomePage from '@/components/HomePage.vue';
 
 const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Hello,
+    component: HomePage,
   },
   {
     path: '/modal',
     name: 'Modal',
-    component:  Modal,
-  }, 
+    component: Modal,
+  },
   {
     path: '/order',
     name: 'Order',
-    component:  Order,
+    component: Order,
   },
- 
+  {
+    path: '/carte',
+    name: 'Carte',
+    component: HomePage
+  },
+  {
+    path: '/burgers/:type',
+    name: 'Burgers',
+    component: HomePage,
+  }
 ];
 
 const router = createRouter({

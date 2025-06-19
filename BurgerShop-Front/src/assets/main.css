@@ -7,6 +7,14 @@
   font-weight: normal;
 }
 
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  overflow-x: hidden;
+}
 a,
 .green {
   text-decoration: none;
