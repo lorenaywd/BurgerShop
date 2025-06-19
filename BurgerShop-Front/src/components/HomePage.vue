@@ -2,6 +2,7 @@
 import { ref, onMounted } from 'vue';
 import NavBar from './NavBar.vue';
 import WelcomeModal from './Modal.vue';
+import TopNavBar from './TopNavbar.vue';
 
 const prenom = ref('');
 
@@ -18,7 +19,21 @@ onMounted(() => {
 const handleNameSet = (name: string) => {
   prenom.value = name;
 };
+const cartCount = ref(0);
+const handleOpenCart = () => {
+  console.log('Panier ouvert (à implémenter plus tard)');
+};
+const cart = ref<any[]>([]);
 
+function addToCart(item) {
+  const found = cart.value.find(i => i.id === item.id);
+  if (found) {
+    found.quantity += 1;
+  } else {
+    cart.value.push({ ...item, quantity: 1 });
+  }
+  cartCount.value++;
+}
 const items = ref([
   { id: 1, nom: 'Burger basique', image: "src/assets/burger.jpg", description: 'Un burger des plus basique', type: 'boeuf' },
   { id: 2, nom: 'Burger 2 fromages', image: "src/assets/burger.jpg", description: 'Deux fromages pour + de plaisir', type: 'boeuf' },
@@ -35,6 +50,7 @@ const items = ref([
 <template>
   <!-- Affichage de la modale  -->
   <WelcomeModal @name-set="handleNameSet" />
+  <TopNavBar :cartCount="cartCount" @open-cart="handleOpenCart" />
   <div class="main-container">
     <div class="sidebar">
       <NavBar />
@@ -52,7 +68,7 @@ const items = ref([
           <img :src="item.image" alt="Burger image" class="card-img" />
           <h3>{{ item.nom }}</h3>
           <p>{{ item.description }}</p>
-          <button class="commander">Commander</button>
+          <button class= "commander" @click="addToCart(item)">Commander</button>
         </div>
       </div>
     </div>
@@ -62,6 +78,9 @@ const items = ref([
 <style>
 body{
   background-color: #EDE8D0;
+}
+TopNavbar{
+
 }
 .burger-list {
   display: flex;
