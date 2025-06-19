@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import Modal from '@/components/Modal.vue';
 import Order from '@/components/OrderForm.vue';
 import HomePage from '@/components/HomePage.vue';
-import path = require('path');
+// import path = require('path');
 
 
 const routes = [
