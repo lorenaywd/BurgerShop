@@ -21,7 +21,7 @@ const routes = [
     component: Order,
   },
   {
-    path: '/carte',
+    path: '/menu/:type?',
     name: 'Carte',
     component: HomePage
   },
