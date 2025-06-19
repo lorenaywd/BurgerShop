@@ -17,14 +17,20 @@ const props = defineProps<{
 </script>
 
 <style scoped>
-/* .top-navbar {
+.top-navbar {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  /* justify-content: space-between; */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100vw;  
+  /* z-index: 1000;  */
+  /* align-items: center; */
   padding: 1rem;
   background: #fff;
-  border-bottom: 1px solid #ccc;
-} */
+  /* border-bottom: 1px solid #ccc; */
+}
 .login-btn {
   padding: 0.5rem 1rem;
   border: none;
@@ -32,19 +38,19 @@ const props = defineProps<{
   color: white;
   border-radius: 20px;
 }
-/* .cart-icon {
+.cart-icon {
   position: relative;
   font-size: 1.5rem;
   cursor: pointer;
-} */
-/* .badge {
+} 
+.badge {
   position: absolute;
-  top: -10px;
-  right: -10px;
+  /* top: -10px; */
+  /* right: -10px; */
   background: red;
   color: white;
   border-radius: 50%;
   padding: 2px 6px;
   font-size: 0.75rem;
-} */
+}
 </style>

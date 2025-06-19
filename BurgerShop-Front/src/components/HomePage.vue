@@ -38,15 +38,15 @@ function addToCart(item) {
   cartCount.value++;
 }
 const items = ref([
-  { id: 1, nom: 'Burger basique', image: "src/assets/burger.jpg", description: 'Un burger des plus basique', type: 'boeuf' },
-  { id: 2, nom: 'Burger 2 fromages', image: "src/assets/burger.jpg", description: 'Deux fromages pour + de plaisir', type: 'boeuf' },
-  { id: 3, nom: 'Burger poulet', image: "src/assets/burger.jpg", description: 'Un burger avec du poulet', type: 'boeuf' },
-  { id: 4, nom: 'Burger végétarien', image: "src/assets/burger.jpg", description: 'Un burger pour les végétariens', type: 'vegetarien' },
-  { id: 5, nom: 'Burger épicé', image: "src/assets/burger.jpg", description: 'Un burger pour les amateurs de sensations fortes', type: 'boeuf' },
-  { id: 6, nom: 'Burger double', image: "src/assets/burger.jpg", description: 'Un burger avec deux steaks', type: 'boeuf' },
-  { id: 7, nom: 'Burger BBQ', image: "src/assets/burger.jpg", description: 'Un burger avec une sauce BBQ maison', type: 'boeuf' },
-  { id: 8, nom: 'Burger gourmet', image: "src/assets/burger.jpg", description: 'Un burger haut de gamme avec des ingrédients raffinés', type: 'boeuf' },
-  { id: 9, nom: 'Burger au saumon', image: "src/assets/burger.jpg", description: 'Un burger avec du saumon frais', type: 'poisson' }
+  { id: 1, nom: 'Burger basique', image: "src/assets/burger1.png", description: 'Un burger des plus basique', type: 'boeuf' },
+  { id: 2, nom: 'Burger 2 fromages', image: "src/assets/burger3.png", description: 'Deux fromages pour + de plaisir', type: 'boeuf' },
+  { id: 3, nom: 'Burger poulet', image: "src/assets/burger10.png", description: 'Un burger avec du poulet', type: 'boeuf' },
+  { id: 4, nom: 'Burger végétarien', image: "src/assets/burger2.png", description: 'Un burger pour les végétariens', type: 'vegetarien' },
+  { id: 5, nom: 'Burger épicé', image: "src/assets/burger4.png", description: 'Un burger pour les amateurs de sensations fortes', type: 'boeuf' },
+  { id: 6, nom: 'Burger double', image: "src/assets/burger5.png", description: 'Un burger avec deux steaks', type: 'boeuf' },
+  { id: 7, nom: 'Burger BBQ', image: "src/assets/burger8.png", description: 'Un burger avec une sauce BBQ maison', type: 'boeuf' },
+  { id: 8, nom: 'Burger gourmet', image: "src/assets/burger6.png", description: 'Un burger haut de gamme avec des ingrédients raffinés', type: 'boeuf' },
+  { id: 9, nom: 'Burger au saumon', image: "src/assets/burger14.png", description: 'Un burger avec du saumon frais', type: 'poisson' }
 ]);
 </script>
 
@@ -79,17 +79,12 @@ const items = ref([
 </template>
 
 <style>
-body{
-  background-color: #EDE8D0;
-}
-TopNavbar{
-
-}
 .burger-list {
   display: flex;
   flex-wrap: wrap; 
   justify-content: space-between;           
-  gap: 16px;                    
+  gap: 16px;   
+  width: 80%;                
 }
 
 .card{
@@ -112,7 +107,8 @@ TopNavbar{
   display: flex;
   min-height: 100vh;
   width: 100vw;
-  background-color: #EDE8D0;
+   margin-top: 80px;
+  /* background-color: #EDE8D0; */
 }
 
 .sidebar {
@@ -122,11 +118,9 @@ TopNavbar{
   left: 0;           
   height: 100vh;     
   width: 20%;      
-  background-color: #EDE8D0;
-  background-color: #fff; 
-  box-shadow: 2px 0 5px rgba(0,0,0,0.1);
-  overflow-y: auto;  
+  /* background-color: #fff;  */
   z-index: 1000; 
+  margin-top: 4%;
 }
 
 .content {

@@ -1,7 +1,8 @@
 <template>
   <div v-if="show" class="modal-overlay">
     <div class="modal-content">
-      <h2>Bienvenue chez BurgerShop!</h2>
+      <h2>Bienvenue chez</h2>
+      <p>Burger Shop</p>
       <input
         type="text"
         v-model="firstName"
@@ -65,6 +66,10 @@ onMounted(() => {
 </script>
 
 <style scoped>
+p{
+   font-family: 'Lilita One', cursive;
+   font-size: 20px;
+}
 .modal-overlay {
   position: fixed;
   top: 0;

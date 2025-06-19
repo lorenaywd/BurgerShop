@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+// import { ref } from 'vue';
 import { useRoute } from 'vue-router';
 
 const route = useRoute()
@@ -8,8 +8,8 @@ console.log('Param from URL:', param)
 </script>
 
 <template>
+    <h1 >Burger Shop</h1>
     <div class="menu">
-        <h1 >Burger Shop</h1>
         <a href="/famous">Burgers du moment</a>
         <a href="/burgers/boeuf">Burgers au boeuf</a>
         <a href="/burgers/chicken">Burgers au poulet</a>
@@ -22,11 +22,8 @@ console.log('Param from URL:', param)
 </template>
 
 <style>
-body{
-    background-color: 
-}
 h1{
-    background-color: #EDE8D0;
+    /* background-color: #EDE8D0; */
     font-family: 'Lilita One', cursive;
     margin-left: 15%;
 
@@ -42,14 +39,12 @@ a {
     font-weight: bold;
     font-size: 30px;
     display: block;
-    margin-top: 10%;
+    /* margin-top: 10%; */
     font-family: 'Open Sans', sans-serif;
-    /* margin: 20px; */
+    margin: 20px;
 }
 .menu {
-    background-color: #EDE8D0;
     padding: 20px;
     height:100%;
-
 }
 </style>

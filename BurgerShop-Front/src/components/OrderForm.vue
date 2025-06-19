@@ -88,7 +88,6 @@ const submitOrder = async () => {
   width: 500px;
   height: 600px;
   margin-top: 1%;
-  /* margin-left: 150%; */
   padding: 2rem;
   background: #fff;
   border-radius: 10px;
