@@ -10,10 +10,11 @@ console.log('Param from URL:', param)
 <template>
     <h1 >Burger Shop</h1>
     <div class="menu">
+        <a href="/menu">Notre carte</a>
         <a href="/famous">Burgers du moment</a>
-        <a href="/burgers/boeuf">Burgers au boeuf</a>
-        <a href="/burgers/chicken">Burgers au poulet</a>
-        <a href="/burgers/fish">Burgers au poisson</a>
+        <a href="/menu/boeuf">Burgers au boeuf</a>
+        <a href="/menu/chicken">Burgers au poulet</a>
+        <a href="/menu/fish">Burgers au poisson</a>
         <a href="">Accompagnements</a>
         <a href="drinks">Boissons</a>
         <a href="desserts">Desserts</a>

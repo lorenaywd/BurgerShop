@@ -1,6 +1,35 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import NavBar from './NavBar.vue';
+import axios from 'axios';
+import { useRoute } from 'vue-router';
+
+const route = useRoute();
+const items = ref([]);
+
+const fetchMenu = async () => {
+  const type = route.params.type;
+  let url = `/api/menu`;
+
+  if (type) {
+    url += `/${type}`;
+  }
+  try {
+    items.value = [];
+    const response = await axios.get(url);
+    items.value = response.data;
+    console.log('Burgers chargés avec succès', items.value);
+  } catch (e) {
+    console.error('Erreur lors du chargement des burgers', e);
+  }
+};
+
+
+onMounted(fetchMenu);
+
+watch(() => route.params.type, fetchMenu);
+
+const prenom = ref('Romain');
 import WelcomeModal from './Modal.vue';
 import TopNavBar from './TopNavbar.vue';
 import { useRouter } from 'vue-router'
@@ -68,10 +97,14 @@ const items = ref([
 
       <div class="burger-list">
         <div v-for="(item, index) in items" :key="index" class="card">
-          <img :src="item.image" alt="Burger image" class="card-img" />
+          <img :src="item.image" alt="Burger image" class="card-img">
           <h3>{{ item.nom }}</h3>
           <p>{{ item.description }}</p>
-          <button class= "commander" @click="addToCart(item)">Commander</button>
+
+          <div class="quantity-row">
+          </div>
+
+          <button class="commander" @click="">Commander</button>
         </div>
       </div>
     </div>
@@ -103,6 +136,7 @@ const items = ref([
   border-radius: 8px;
   height: 25rem;
 }
+
 .main-container {
   display: flex;
   min-height: 100vh;
