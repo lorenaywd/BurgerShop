@@ -3,7 +3,9 @@ import { ref, onMounted } from 'vue';
 import NavBar from './NavBar.vue';
 import WelcomeModal from './Modal.vue';
 import TopNavBar from './TopNavbar.vue';
+import { useRouter } from 'vue-router'
 
+const router = useRouter()
 const prenom = ref('');
 
 onMounted(() => {
@@ -21,8 +23,9 @@ const handleNameSet = (name: string) => {
 };
 const cartCount = ref(0);
 const handleOpenCart = () => {
-  console.log('Panier ouvert (à implémenter plus tard)');
-};
+  router.push('/order')
+}
+
 const cart = ref<any[]>([]);
 
 function addToCart(item) {

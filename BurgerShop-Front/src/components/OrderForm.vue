@@ -1,32 +1,7 @@
-<template>
-  <h1>BURGER SHOP</h1>
-  <form class="form-container" @submit.prevent="submitOrder">
-    <h2>Finalisez votre commande</h2>
-    <label>
-      Nom 
-      <input v-model="name" type="text" />
-    </label>
-    <span v-if="errors.name" class="error">{{ errors.name }}</span>
-
-    <label>
-      Email 
-      <input v-model="email" type="email" />
-    </label>
-    <span v-if="errors.email" class="error">{{ errors.email }}</span>
-
-    <label>
-      Adresse 
-      <textarea v-model="address"></textarea>
-    </label>
-    <span v-if="errors.address" class="error">{{ errors.address }}</span>
-
-    <button type="submit">Confirmer la commande</button>
-  </form>
-</template>
-
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
+import CartItems from './CartItem.vue'
 
 const name = ref('');
 const email = ref('');
@@ -70,12 +45,50 @@ const submitOrder = async () => {
 };
 </script>
 
+<template>
+  <h1>BURGER SHOP</h1>
+
+   <div class="order-page">
+    <CartItems />
+    <form class="form-container" @submit.prevent="submitOrder">
+      <h2>Finalisez votre commande</h2>
+      <label>
+        Nom 
+        <input v-model="name" type="text" />
+      </label>
+      <span v-if="errors.name" class="error">{{ errors.name }}</span>
+
+      <label>
+        Email 
+        <input v-model="email" type="email" />
+      </label>
+      <span v-if="errors.email" class="error">{{ errors.email }}</span>
+
+      <label>
+        Adresse 
+        <textarea v-model="address"></textarea>
+      </label>
+      <span v-if="errors.address" class="error">{{ errors.address }}</span>
+
+      <button type="submit">Confirmer la commande</button>
+    </form>
+  </div>
+
+
+  
+</template>
+
 <style scoped>
+.order-page {
+  display: flex;
+  gap: 2rem;
+  padding: 2rem;
+}
 .form-container {
   width: 500px;
   height: 600px;
   margin-top: 1%;
-  margin-left: 150%;
+  /* margin-left: 150%; */
   padding: 2rem;
   background: #fff;
   border-radius: 10px;
