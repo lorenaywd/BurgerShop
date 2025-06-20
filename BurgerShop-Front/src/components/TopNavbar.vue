@@ -2,6 +2,7 @@
   <div class="top-navbar">
     <div class="navbar-left">
       <h1>Burger Shop</h1>
+      <img :src="logo" alt="Burger Shop Logo" style="width: 50px; height: 50px; margin-left: 10px;" />
     </div>
     <div class="navbar-right">
       <template v-if="!userStore.isAuthenticated">
@@ -26,6 +27,7 @@ import { useUserStore } from '../store/user';
 import { useRouter } from 'vue-router';
 import LoginForm from './LoginForm.vue';
 import cartImage from '@/assets/cart.png';
+import logo from '@/assets/navbar.png';
 
 const userStore = useUserStore();
 const router = useRouter();

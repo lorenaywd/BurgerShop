@@ -1,27 +1,32 @@
 <template>
   <div class="form-container">
-    <form @submit.prevent="onSubmit" class="form-card">
-      <h2>Créer un compte</h2>
+    <div class="gauche">
+      <img :src="icone" alt="Image d'inscription" style="width: 80%; height: 80%; object-fit: cover;" />
+    </div>
+    <div class="droite">
+      <form @submit.prevent="onSubmit" class="form-card">
+        <h2>Créer un compte</h2>
 
-      <div class="form-group">
-        <label>Email</label>
-        <input v-model="email" type="email" required />
-      </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input v-model="email" type="email" required />
+        </div>
 
-      <div class="form-group">
-        <label>Mot de passe</label>
-        <input v-model="password" type="password" required minlength="6" />
-      </div>
+        <div class="form-group">
+          <label>Mot de passe</label>
+          <input v-model="password" type="password" required minlength="6" />
+        </div>
 
-      <div class="form-group">
-        <label>Confirmer le mot de passe</label>
-        <input v-model="passwordConfirm" type="password" required minlength="6" />
-      </div>
+        <div class="form-group">
+          <label>Confirmer le mot de passe</label>
+          <input v-model="passwordConfirm" type="password" required minlength="6" />
+        </div>
 
-      <p v-if="error" class="error-message">{{ error }}</p>
+        <p v-if="error" class="error-message">{{ error }}</p>
 
-      <button type="submit" class="submit-btn">Prêt à déguster !</button>
-    </form>
+        <button type="submit" class="submit-btn">Prêt à déguster !</button>
+      </form>
+    </div>
   </div>
 </template>
 
@@ -29,6 +34,7 @@
 import { ref } from 'vue';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
+import icone from '@/assets/inscription_connexion.png';
 
 const email = ref('');
 const password = ref('');
@@ -68,9 +74,20 @@ const onSubmit = async () => {
 </script>
 
 <style scoped>
+.gauche {
+  width: 40%;;
+  background-size: cover;
+  background-position: center;
+}
+
+.droite {
+  width: 60%;
+}
+
 label {
   font-family: 'Open Sans', sans-serif;
 }
+
 .form-container {
   display: flex;
   justify-content: center;

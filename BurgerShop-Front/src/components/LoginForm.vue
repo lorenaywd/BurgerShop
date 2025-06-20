@@ -3,6 +3,7 @@ import { ref } from 'vue';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
 import { useUserStore } from '../store/user';
+import icone from '@/assets/inscription_connexion.png';
 
 const email = ref('');
 const password = ref('');
@@ -37,30 +38,46 @@ const onSubmit = async () => {
 
 <template>
   <div class="login">
-    <form @submit.prevent="onSubmit" class="login-card">
-      <h2>Connexion</h2>
+    <div class="gauche">
+      <img :src="icone" alt="Image d'inscription" style="width: 80%; height: 80%; object-fit: cover;" />
+    </div>
+    <div class="droite">
+      <form @submit.prevent="onSubmit" class="login-card">
+        <h2>Connexion</h2>
 
-      <div class="form-group">
-        <label>Email</label>
-        <input v-model="email" type="email" required />
-      </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input v-model="email" type="email" required />
+        </div>
 
-      <div class="form-group">
-        <label>Mot de passe</label>
-        <input v-model="password" type="password" required />
-      </div>
+        <div class="form-group">
+          <label>Mot de passe</label>
+          <input v-model="password" type="password" required />
+        </div>
 
-      <p v-if="error" class="error-message">{{ error }}</p>
+        <p v-if="error" class="error-message">{{ error }}</p>
 
-      <button type="submit" class="submit-btn">Se connecter</button>
-    </form>
+        <button type="submit" class="submit-btn">Se connecter</button>
+      </form>
+    </div>
   </div>
 </template>
 
 <style scoped>
+.gauche {
+  width: 40%;;
+  background-size: cover;
+  background-position: center;
+}
+
+.droite {
+  width: 60%;
+}
+
 label {
   font-family: 'Open Sans', sans-serif;
 }
+
 .login {
   display: flex;
   justify-content: center;
