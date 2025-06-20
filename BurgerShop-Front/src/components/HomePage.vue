@@ -3,9 +3,14 @@ import { onMounted, ref, watch } from 'vue';
 import NavBar from './NavBar.vue';
 import axios from 'axios';
 import { useRoute } from 'vue-router';
+// import WelcomeModal from './Modal.vue';
+import TopNavBar from './TopNavbar.vue';
+import { useRouter } from 'vue-router'
 
 const route = useRoute();
 const items = ref([]);
+const router = useRouter()
+const prenom = ref('');
 
 const fetchMenu = async () => {
   const type = route.params.type;
@@ -24,18 +29,8 @@ const fetchMenu = async () => {
   }
 };
 
-
 onMounted(fetchMenu);
-
 watch(() => route.params.type, fetchMenu);
-
-const prenom = ref('Romain');
-import WelcomeModal from './Modal.vue';
-import TopNavBar from './TopNavbar.vue';
-import { useRouter } from 'vue-router'
-
-const router = useRouter()
-const prenom = ref('');
 
 onMounted(() => {
   const stored = localStorage.getItem('burgerShopUser');
@@ -66,25 +61,25 @@ function addToCart(item) {
   }
   cartCount.value++;
 }
-const items = ref([
-  { id: 1, nom: 'Burger basique', image: "src/assets/burger1.png", description: 'Un burger des plus basique', type: 'boeuf' },
-  { id: 2, nom: 'Burger 2 fromages', image: "src/assets/burger3.png", description: 'Deux fromages pour + de plaisir', type: 'boeuf' },
-  { id: 3, nom: 'Burger poulet', image: "src/assets/burger10.png", description: 'Un burger avec du poulet', type: 'boeuf' },
-  { id: 4, nom: 'Burger végétarien', image: "src/assets/burger2.png", description: 'Un burger pour les végétariens', type: 'vegetarien' },
-  { id: 5, nom: 'Burger épicé', image: "src/assets/burger4.png", description: 'Un burger pour les amateurs de sensations fortes', type: 'boeuf' },
-  { id: 6, nom: 'Burger double', image: "src/assets/burger5.png", description: 'Un burger avec deux steaks', type: 'boeuf' },
-  { id: 7, nom: 'Burger BBQ', image: "src/assets/burger8.png", description: 'Un burger avec une sauce BBQ maison', type: 'boeuf' },
-  { id: 8, nom: 'Burger gourmet', image: "src/assets/burger6.png", description: 'Un burger haut de gamme avec des ingrédients raffinés', type: 'boeuf' },
-  { id: 9, nom: 'Burger au saumon', image: "src/assets/burger14.png", description: 'Un burger avec du saumon frais', type: 'poisson' }
-]);
+
+const isSidebarOpen = ref(false);
+
+const toggleSidebar = () => {
+  isSidebarOpen.value = !isSidebarOpen.value;
+};
+
+
 </script>
 
 <template>
-  <!-- Affichage de la modale  -->
-  <WelcomeModal @name-set="handleNameSet" />
+  <!-- <WelcomeModal @name-set="handleNameSet" /> -->
   <TopNavBar :cartCount="cartCount" @open-cart="handleOpenCart" />
+  <!-- Bouton menu mobile -->
+  <button class="hamburger" @click="toggleSidebar">
+    ☰
+  </button>
   <div class="main-container">
-    <div class="sidebar">
+    <div class="sidebar" :class="{ open: isSidebarOpen }">
       <NavBar />
     </div>
     <div class="content">
@@ -97,14 +92,14 @@ const items = ref([
 
       <div class="burger-list">
         <div v-for="(item, index) in items" :key="index" class="card">
-          <img :src="item.image" alt="Burger image" class="card-img">
-          <h3>{{ item.nom }}</h3>
+          <img :src="`http://localhost:8000${item.image}`" alt="Burger image" />
+          <h3>{{ item.name }}</h3>
           <p>{{ item.description }}</p>
 
           <div class="quantity-row">
           </div>
 
-          <button class="commander" @click="">Commander</button>
+          <button class="commander" @click="addToCart">Commander</button>
         </div>
       </div>
     </div>
@@ -112,10 +107,11 @@ const items = ref([
 </template>
 
 <style>
+
 .burger-list {
   display: flex;
   flex-wrap: wrap; 
-  justify-content: space-between;           
+  justify-content: flex-start;          
   gap: 16px;   
   width: 80%;                
 }
@@ -126,15 +122,28 @@ const items = ref([
   padding: 8px; 
   width: calc(33.333% - 11px);  
   box-sizing: border-box;
+  height: 400px;
+   /* border: 1px solid #ccc;  */
 }
-
+/* .card h3, .card p {
+  margin: 0 0 8px 0;
+  flex-grow: 1; 
+} */
+/* .card-content > h3,
+.card-content > p {
+  margin: 0 0 8px 0;
+} */
 .card-img {
+  height: 200px;
   max-width: 100%;
-  height: auto;      
-  display: block; 
+  /* height: auto;      
+  display: block;  */
+  object-fit: cover;
+  flex-shrink: 0;
   width: 80%;
   border-radius: 8px;
   height: 25rem;
+  margin-bottom: 8px;
 }
 
 .main-container {
@@ -143,6 +152,9 @@ const items = ref([
   width: 100vw;
    margin-top: 80px;
   /* background-color: #EDE8D0; */
+}
+.sidebar {
+  transition: transform 0.3s ease;
 }
 
 .sidebar {
@@ -155,6 +167,17 @@ const items = ref([
   /* background-color: #fff;  */
   z-index: 1000; 
   margin-top: 4%;
+}
+.hamburger {
+  display: none;
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  font-size: 24px;
+  background: none;
+  border: none;
+  z-index: 1100;
+  cursor: pointer;
 }
 
 .content {
@@ -199,5 +222,67 @@ body {
   padding: 5px 10px;
   cursor: pointer;
   font-size: 16px;
+}
+
+/* 🎯 RESPONSIVE DESIGN */
+@media (max-width: 1024px) {
+  .card {
+    flex: 1 1 calc(50% - 11px);
+  }
+
+  .sidebar {
+    position: relative;
+    width: 100%;
+    height: auto;
+    margin-top: 0;
+  }
+
+  .main-container {
+    flex-direction: column;
+    margin-top: 60px;
+  }
+
+  .content {
+    margin-left: 0;
+    width: 100%;
+  }
+}
+@media (max-width: 768px) {
+  .hamburger {
+    display: block;
+  }
+
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: white;
+    width: 250px;
+    height: 100vh;
+    transform: translateX(-100%);
+    z-index: 1000;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.3);
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  .main-container {
+    margin-top: 60px;
+    flex-direction: column;
+  }
+
+  .content {
+    margin-left: 0 !important;
+    padding: 16px;
+    width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  .card {
+    flex: 1 1 100%;
+  }
 }
 </style>
