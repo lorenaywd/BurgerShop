@@ -82,14 +82,17 @@ const addToCart = (burger: Burger) => {
     <div class="content">
       <header>
         <!-- <h1>Bienvenue, {{ prenom }}</h1> -->
-        <p>Découvrez nos délicieux burgers faits maison !</p>
+        <p class=" accroche">Découvrez nos délicieux burgers faits maison !</p>
       </header>
 
       <h2>Notre menu</h2>
 
       <div class="burger-list">
         <div v-for="(item, index) in items" :key="index" class="card">
-          <img :src="`http://localhost:8000${item.image}`" alt="Burger image" />
+          <div class="img">
+            <img :src="`http://localhost:8000${item.image}`" alt="Burger image" />
+          </div>
+  
           <h3>{{ item.name }}</h3>
           <p>{{ item.description }}</p>
 
@@ -117,6 +120,7 @@ const addToCart = (burger: Burger) => {
   margin: 0; 
   padding: 8px; 
   width: calc(33% - 40px);  
+  min-width: 10px;
   box-sizing: border-box;
 }
 
@@ -128,6 +132,10 @@ const addToCart = (burger: Burger) => {
   border-radius: 8px;
   height: 25rem;
 } */
+ .img{
+  min-height: 20px;
+  min-width: 20px;
+ }
 
 .card-img {
   width: 100px;
@@ -196,5 +204,9 @@ body {
   padding: 5px 10px;
   cursor: pointer;
   font-size: 16px;
+}
+.accroche{
+  font-size: 4rem;
+  font-family: 'Ranchers', cursive;
 }
 </style>

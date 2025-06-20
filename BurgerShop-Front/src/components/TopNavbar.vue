@@ -31,7 +31,7 @@ const userStore = useUserStore();
 const router = useRouter();
 const logout = () => {
   userStore.logout();
-  router.push('/login');
+  router.push('/');
 };
 const register = () => {
   router.push('/register');

@@ -63,9 +63,16 @@ p {
   border-radius: 10px;
   text-align: center;
   width: 40rem;
-  height: 40rem;
+  height: 25rem;
+  padding-top: 4rem;
+  padding-right:2rem ;
+  padding-left: 2rem;
 }
-
+label {
+font-family: 'Open Sans', sans-serif;
+ font-weight: 500;
+font-size: larger;
+}
 input {
   width: 100%;
   margin: 1rem 0;
@@ -82,6 +89,7 @@ button {
   border-radius: 20px;
   width: 50%;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  margin-top: 2rem;
 }
 
 button:hover {
