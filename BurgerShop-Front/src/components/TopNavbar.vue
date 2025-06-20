@@ -43,6 +43,7 @@ const props = defineProps<{
   width: 100vw;
   padding: 1rem;
   background: #fff;
+  z-index: 1000;
 }
 .login-btn {
   padding: 0.5rem 1rem;

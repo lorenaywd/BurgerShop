@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\BurgerRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: BurgerRepository::class)]
@@ -27,6 +29,17 @@ class Burger
 
     #[ORM\Column(nullable: true)]
     private ?float $price = null;
+
+    /**
+     * @var Collection<int, Ingredient>
+     */
+    #[ORM\ManyToMany(targetEntity: Ingredient::class, mappedBy: 'burgers')]
+    private Collection $ingredients;
+
+    public function __construct()
+    {
+        $this->ingredients = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -99,19 +112,46 @@ class Burger
 
         return $this;
     }
-  public function toArray(): array 
-{
-    $image = $this->getImage();
-    if (!str_starts_with($image, '/uploads')) {
-        $image = '/images/' . ltrim($image, '/');
+    public function toArray(): array
+    {
+        return [
+            'id' => $this->getId(),
+            'name' => $this->getName(),
+            'image' => $this->getImage(),
+            'description' => $this->getDescription(),
+            'type' => $this->getType(),
+            'price' => $this->getPrice(),
+            'ingredients' => array_map(fn($ingredient) => [
+                'id' => $ingredient->getId(),
+                'name' => $ingredient->getName()
+            ], $this->getIngredients()->toArray()), // récupère la collection d'ingrédients
+        ];
     }
-    return [
-        'id' => $this->getId(),
-        'name' => $this->getName(),
-        'description' => $this->getDescription(),
-        'price' => $this->getPrice(),
-        'type' => $this->getType(),
-        'image' => $image,
-    ];
-}
+
+  /**
+   * @return Collection<int, Ingredient>
+   */
+  public function getIngredients(): Collection
+  {
+      return $this->ingredients;
+  }
+
+  public function addIngredient(Ingredient $ingredient): static
+  {
+      if (!$this->ingredients->contains($ingredient)) {
+          $this->ingredients->add($ingredient);
+          $ingredient->addBurger($this);
+      }
+
+      return $this;
+  }
+
+  public function removeIngredient(Ingredient $ingredient): static
+  {
+      if ($this->ingredients->removeElement($ingredient)) {
+          $ingredient->removeBurger($this);
+      }
+
+      return $this;
+  }
 }
