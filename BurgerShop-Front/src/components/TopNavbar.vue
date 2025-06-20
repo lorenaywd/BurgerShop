@@ -23,7 +23,6 @@ const logout = () => {
   router.push('/login');
 };
 const register = () => {
-  userStore.register();
   router.push('/register');
 };
 const login = () => {
@@ -86,7 +85,6 @@ const props = defineProps<{
   width: 50%;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   margin-left: 2%;
-  width: 15%;
 }
 button:hover {
   transform: translateY(-4px);
