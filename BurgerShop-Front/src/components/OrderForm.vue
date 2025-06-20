@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { onMounted, ref, toRaw } from 'vue';
 import { useRouter } from 'vue-router';
 import CartItems from './CartItem.vue'
 
@@ -9,6 +9,9 @@ const address = ref('');
 const errors = ref<{ name?: string; email?: string; address?: string }>({});
 
 const router = useRouter();
+
+
+
 
 const validateEmail = (value: string) =>
   /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
@@ -31,41 +34,67 @@ const submitOrder = async () => {
   if (!validateForm()) return;
 
   try {
-    // Simule un appel à une API
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+    const total = cart.reduce(
+      (acc: number, item: { price: number; quantity: number }) => acc + item.price * item.quantity,
+      0
+    );
+    const orderData = {
+      items: cart,
+      total: parseFloat(total.toFixed(2)),
+      createdAt: new Date().toISOString(),
+      customer: {
+        name: typeof name === 'object' && 'value' in name ? name.value : name,
+        address: typeof address === 'object' && 'value' in address ? address.value : address,
+        email: typeof email === 'object' && 'value' in email ? email.value : email,
+      },
+    };
 
-    // Vide le panier (exemple avec localStorage)
-    localStorage.removeItem('cartItems');
+    const response = await fetch('/api/orders', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(orderData),
+    });
 
-    // Redirection vers confirmation
-    router.push('/confirmation');
+    if (!response.ok) {
+      throw new Error('Erreur lors de la création de la commande');
+    }
+    const result = await response.json();
+    console.log('Résultat de la commande :', result);
+    const orderId = result.id;
+    localStorage.removeItem('cart');
+    router.push({ name: 'Confirmation', params: { orderId: String(orderId) } });
   } catch (error) {
     console.error('Erreur lors de la commande :', error);
   }
 };
+
+
 </script>
 
 <template>
   <h1>BURGER SHOP</h1>
 
-   <div class="order-page">
+  <div class="order-page">
     <CartItems />
     <form class="form-container" @submit.prevent="submitOrder">
       <h2>Finalisez votre commande</h2>
       <label>
-        Nom 
+        Nom
         <input v-model="name" type="text" />
       </label>
       <span v-if="errors.name" class="error">{{ errors.name }}</span>
 
       <label>
-        Email 
+        Email
         <input v-model="email" type="email" />
       </label>
       <span v-if="errors.email" class="error">{{ errors.email }}</span>
 
       <label>
-        Adresse 
+        Adresse
         <textarea v-model="address"></textarea>
       </label>
       <span v-if="errors.address" class="error">{{ errors.address }}</span>
@@ -75,7 +104,7 @@ const submitOrder = async () => {
   </div>
 
 
-  
+
 </template>
 
 <style scoped>
@@ -84,6 +113,7 @@ const submitOrder = async () => {
   gap: 2rem;
   padding: 2rem;
 }
+
 .form-container {
   width: 500px;
   height: 600px;
@@ -93,20 +123,24 @@ const submitOrder = async () => {
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
-h1{
-   font-family: 'Lilita One', cursive;
-   font-size: 5rem;
+
+h1 {
+  font-family: 'Lilita One', cursive;
+  font-size: 5rem;
 }
-h2{
+
+h2 {
   font-size: 30px;
   font-family: 'Open Sans', sans-serif;
   font-weight: bold;
 }
+
 label {
   display: block;
   margin-top: 1.5rem;
   font-size: 20px
 }
+
 input,
 textarea {
   width: 100%;
@@ -114,13 +148,15 @@ textarea {
   padding: 0.5rem;
   margin-top: 0.25rem;
   background-color: rgb(227, 227, 227);
-  border: none; 
+  border: none;
   border-radius: 5px;
 }
+
 .error {
   color: red;
   font-size: 0.85rem;
 }
+
 button {
   margin-top: 5rem;
   padding: 0.75rem 1.5rem;
@@ -133,6 +169,7 @@ button {
   font-size: 18px;
 
 }
+
 button:hover {
   transform: translateY(-3px);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);

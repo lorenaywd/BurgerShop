@@ -5,6 +5,7 @@ import HomePage from '@/components/HomePage.vue';
 import { useUserStore } from '@/store/user'
 import LoginForm from '@/components/LoginForm.vue';
 import RegisterForm from '@/components/RegisterForm.vue';
+import Confirmation from '@/components/Confirmation.vue';
 
 
 const routes = [
@@ -43,11 +44,16 @@ const routes = [
     path: '/burgers/:type',
     name: 'Burgers',
     component: HomePage,
-  }
+  },
   // { path: '/history',
   //   component: HistoryPage, 
   //   meta: { requiresAuth: true } 
   // },
+{
+  path: '/confirmation:orderId',
+  name: 'Confirmation',
+  component: Confirmation,
+}
 ];
 
 const router = createRouter({
