@@ -8,17 +8,11 @@ console.log('Param from URL:', param)
 </script>
 
 <template>
-    <h1 >Burger Shop</h1>
     <div class="menu">
         <a href="/menu">Notre carte</a>
-        <a href="/famous">Burgers du moment</a>
         <a href="/menu/boeuf">Burgers au boeuf</a>
         <a href="/menu/chicken">Burgers au poulet</a>
         <a href="/menu/fish">Burgers au poisson</a>
-        <a href="">Accompagnements</a>
-        <a href="drinks">Boissons</a>
-        <a href="desserts">Desserts</a>
-        <a href="/sales">Promotions</a>
     </div>
 </template>
 
@@ -37,14 +31,16 @@ a {
     text-decoration: none;
     color: #000000;
     font-weight: bold;
-    font-size: 30px;
+    font-size: 25px;
     display: block;
-    /* margin-top: 10%; */
     font-family: 'Open Sans', sans-serif;
-    margin: 20px;
+    margin-top: 20%;
+    margin-left: 2%;
 }
 .menu {
+    margin-top:1% ;
     padding: 20px;
-    height:100%;
+    height:90%;
+    border-right: 1px solid;
 }
 </style>

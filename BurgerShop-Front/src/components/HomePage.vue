@@ -4,6 +4,7 @@ import NavBar from './NavBar.vue';
 import axios from 'axios';
 import { useRoute } from 'vue-router';
 
+
 const route = useRoute();
 const items = ref<Burger[]>([]);
 
@@ -92,7 +93,7 @@ function flipCard(index: number | null) {
     </div>
     <div class="content">
       <header>
-        <h1>Bienvenue, {{ prenom }}</h1>
+        <!-- <h1>Bienvenue, {{ prenom }}</h1> -->
         <p>Découvrez nos délicieux burgers faits maison !</p>
       </header>
 
@@ -134,9 +135,9 @@ function flipCard(index: number | null) {
 .burger-list {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 20px;
-  width: 80%;
+  justify-content: flex-start; 
+  gap: 0px;                  
+  width: 100%;                 
 }
 
 .card {
@@ -199,12 +200,23 @@ function flipCard(index: number | null) {
   font-weight: bold;
 }
 
+  height: 25rem;
+} */
+
+.card-img {
+  width: 100px;
+  height: 250px; 
+  object-fit: cover;
+  border-radius: 8px;
+  display: block;
+}
 .main-container {
   display: flex;
   min-height: 100vh;
   width: 100vw;
   margin-top: 80px;
   /* background-color: #EDE8D0; */
+   margin-top: 80px;
 }
 
 .sidebar {
@@ -216,6 +228,12 @@ function flipCard(index: number | null) {
   width: 20%;
   /* background-color: #fff;  */
   z-index: 1000;
+  position: fixed;   
+  top: 0;            
+  left: 0;           
+  height: 100vh;     
+  width: 20%;      
+  z-index: 1000; 
   margin-top: 4%;
 }
 
