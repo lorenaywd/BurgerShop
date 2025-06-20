@@ -80,7 +80,7 @@ const addToCart = (burger: Burger) => {
     </div>
     <div class="content">
       <header>
-        <h1>Bienvenue, {{ prenom }}</h1>
+        <h1 class="Bienvenue">Bienvenue, {{ prenom }}</h1>
         <p>Découvrez nos délicieux burgers faits maison !</p>
       </header>
 
@@ -103,6 +103,9 @@ const addToCart = (burger: Burger) => {
 </template>
 
 <style>
+.Bienvenue {
+  margin-left: 0%;
+}
 .burger-list {
   display: flex;
   flex-wrap: wrap; 
@@ -149,6 +152,7 @@ const addToCart = (burger: Burger) => {
 }
 
 .content {
+  background-color: #E8DDCA;
   width: 50%;
   flex: 1;
   padding: 24px;

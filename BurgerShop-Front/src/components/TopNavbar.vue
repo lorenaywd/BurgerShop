@@ -17,7 +17,17 @@ const props = defineProps<{
 </script>
 
 <style scoped>
+.cart-button {
+  display: flex;
+  align-items: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.5rem;
+  position: relative;
+}
 .top-navbar {
+  
   display: flex;
   /* justify-content: space-between; */
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
