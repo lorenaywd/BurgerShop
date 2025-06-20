@@ -68,6 +68,9 @@ const onSubmit = async () => {
 </script>
 
 <style scoped>
+label {
+  font-family: 'Open Sans', sans-serif;
+}
 .form-container {
   display: flex;
   justify-content: center;

@@ -58,6 +58,9 @@ const onSubmit = async () => {
 </template>
 
 <style scoped>
+label {
+  font-family: 'Open Sans', sans-serif;
+}
 .login {
   display: flex;
   justify-content: center;
