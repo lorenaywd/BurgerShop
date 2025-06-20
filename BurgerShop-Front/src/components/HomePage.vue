@@ -47,6 +47,13 @@ onMounted(() => {
   }, 0);
   cartCount.value = totalCount;
 });
+const prenom = ref('');
+const router = useRouter();
+const isSidebarOpen = ref(false);
+
+const toggleSidebar = () => {
+  isSidebarOpen.value = !isSidebarOpen.value;
+};
 
 const handleNameSet = (name: string) => {
   prenom.value = name;
