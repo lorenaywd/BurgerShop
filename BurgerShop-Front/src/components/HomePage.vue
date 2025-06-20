@@ -4,6 +4,7 @@ import NavBar from './NavBar.vue';
 import axios from 'axios';
 import { useRoute } from 'vue-router';
 
+
 const route = useRoute();
 const items = ref<Burger[]>([]);
 
@@ -72,8 +73,7 @@ const addToCart = (burger: Burger) => {
 </script>
 
 <template>
-  <!-- Affichage de la modale  -->
-  <!-- <WelcomeModal @name-set="handleNameSet" /> -->
+  
   <TopNavBar :cartCount="cartCount" @open-cart="handleOpenCart" />
   <div class="main-container">
     <div class="sidebar">
@@ -81,7 +81,7 @@ const addToCart = (burger: Burger) => {
     </div>
     <div class="content">
       <header>
-        <h1>Bienvenue, {{ prenom }}</h1>
+        <!-- <h1>Bienvenue, {{ prenom }}</h1> -->
         <p>Découvrez nos délicieux burgers faits maison !</p>
       </header>
 
@@ -106,35 +106,41 @@ const addToCart = (burger: Burger) => {
 <style>
 .burger-list {
   display: flex;
-  flex-wrap: wrap; 
-  justify-content: space-between;           
-  gap: 16px;   
-  width: 80%;                
+  flex-wrap: wrap;
+  justify-content: flex-start; 
+  gap: 0px;                  
+  width: 100%;                 
 }
 
 .card{
   margin-bottom: 5%;
   margin: 0; 
   padding: 8px; 
-  width: calc(33.333% - 11px);  
+  width: calc(33% - 40px);  
   box-sizing: border-box;
 }
 
-.card-img {
+/* .card-img {
   max-width: 100%;
   height: auto;      
   display: block; 
   width: 80%;
   border-radius: 8px;
   height: 25rem;
-}
+} */
 
+.card-img {
+  width: 100px;
+  height: 250px; 
+  object-fit: cover;
+  border-radius: 8px;
+  display: block;
+}
 .main-container {
   display: flex;
   min-height: 100vh;
   width: 100vw;
    margin-top: 80px;
-  /* background-color: #EDE8D0; */
 }
 
 .sidebar {
@@ -144,7 +150,6 @@ const addToCart = (burger: Burger) => {
   left: 0;           
   height: 100vh;     
   width: 20%;      
-  /* background-color: #fff;  */
   z-index: 1000; 
   margin-top: 4%;
 }
