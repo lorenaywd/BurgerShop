@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref, watch, watchEffect } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import NavBar from './NavBar.vue';
 import axios from 'axios';
 import { useRoute } from 'vue-router';
@@ -8,16 +8,9 @@ import TopNavBar from './TopNavbar.vue';
 import { useRouter } from 'vue-router'
 
 const route = useRoute();
-const items = ref<Burger[]>([]);
-
-type Burger = {
-  id: number;
-  name: string;
-  image: string;
-  description: string;
-  type: string;
-  price: number;
-};
+const items = ref([]);
+const router = useRouter()
+const prenom = ref('');
 
 const fetchMenu = async () => {
   const type = route.params.type;
@@ -40,20 +33,14 @@ onMounted(fetchMenu);
 watch(() => route.params.type, fetchMenu);
 
 onMounted(() => {
-  const saved = JSON.parse(localStorage.getItem('cart') || '[]');
-  const totalCount = saved.reduce((acc: number, item: any) => {
-    const quantity = Number(item.quantity) || 1;
-    return acc + quantity;
-  }, 0);
-  cartCount.value = totalCount;
+  const stored = localStorage.getItem('burgerShopUser');
+  if (stored) {
+    const data = JSON.parse(stored);
+    if (data.name && Date.now() < data.expiresAt) {
+      prenom.value = data.name;
+    }
+  }
 });
-const prenom = ref('');
-const router = useRouter();
-const isSidebarOpen = ref(false);
-
-const toggleSidebar = () => {
-  isSidebarOpen.value = !isSidebarOpen.value;
-};
 
 const handleNameSet = (name: string) => {
   prenom.value = name;
@@ -63,11 +50,24 @@ const handleOpenCart = () => {
   router.push('/order')
 }
 
-const addToCart = (burger: Burger) => {
-  const cart = JSON.parse(localStorage.getItem('cart') || '[]');
-  cart.push(burger);
-  localStorage.setItem('cart', JSON.stringify(cart));
+const cart = ref<any[]>([]);
+
+function addToCart(item) {
+  const found = cart.value.find(i => i.id === item.id);
+  if (found) {
+    found.quantity += 1;
+  } else {
+    cart.value.push({ ...item, quantity: 1 });
+  }
+  cartCount.value++;
+}
+
+const isSidebarOpen = ref(false);
+
+const toggleSidebar = () => {
+  isSidebarOpen.value = !isSidebarOpen.value;
 };
+
 
 </script>
 
@@ -84,7 +84,7 @@ const addToCart = (burger: Burger) => {
     </div>
     <div class="content">
       <header>
-        <h1 class="Bienvenue">Bienvenue, {{ prenom }}</h1>
+        <h1>Bienvenue, {{ prenom }}</h1>
         <p>Découvrez nos délicieux burgers faits maison !</p>
       </header>
 
@@ -99,7 +99,7 @@ const addToCart = (burger: Burger) => {
           <div class="quantity-row">
           </div>
 
-          <button class="commander" @click="addToCart(item)">Commander</button>
+          <button class="commander" @click="addToCart">Commander</button>
         </div>
       </div>
     </div>
@@ -181,7 +181,6 @@ const addToCart = (burger: Burger) => {
 }
 
 .content {
-  background-color: #E8DDCA;
   width: 50%;
   flex: 1;
   padding: 24px;

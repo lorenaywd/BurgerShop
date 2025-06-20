@@ -23,7 +23,6 @@ const logout = () => {
   router.push('/login');
 };
 const register = () => {
-  userStore.register();
   router.push('/register');
 };
 const login = () => {
@@ -35,23 +34,13 @@ const props = defineProps<{
 </script>
 
 <style scoped>
-.cart-button {
-  display: flex;
-  align-items: center;
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 1.5rem;
-  position: relative;
-}
 .top-navbar {
-  
   display: flex;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   position: fixed;
   left: 0;
   top: 0;
-  width: 100vw;  
+  width: 100vw;
   padding: 1rem;
   background: #fff;
 }
@@ -96,7 +85,6 @@ const props = defineProps<{
   width: 50%;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   margin-left: 2%;
-  width: 15%;
 }
 button:hover {
   transform: translateY(-4px);

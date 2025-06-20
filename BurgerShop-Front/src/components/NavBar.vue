@@ -24,7 +24,6 @@ console.log('Param from URL:', param)
 
 <style>
 h1{
-    /* background-color: #EDE8D0; */
     font-family: 'Lilita One', cursive;
     margin-left: 15%;
 
