@@ -200,9 +200,6 @@ function flipCard(index: number | null) {
   font-weight: bold;
 }
 
-  height: 25rem;
-} */
-
 .card-img {
   width: 100px;
   height: 250px; 

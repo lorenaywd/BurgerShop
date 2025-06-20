@@ -22,7 +22,10 @@ const validate = () => {
 const onSubmit = async () => {
   if (!validate()) return;
   try {
-    const response = await axios.post('https://localhost:8000/api/auth/login', { email: email.value, password: password.value });
+    const response = await axios.post('https://localhost:8000/api/auth/login', {
+      email: email.value,
+      password: password.value
+    });
     const { token, user } = response.data;
     userStore.setUser(token, user);
     router.push('/');
@@ -33,60 +36,100 @@ const onSubmit = async () => {
 </script>
 
 <template>
-    <div class="modal-content login-container">
-      <form @submit.prevent="onSubmit">
-        <div>
-          <label>Email</label>
-          <input v-model="email" type="email" required />
-        </div>
-        <div>
-          <label>Mot de passe</label>
-          <input v-model="password" type="password" required />
-        </div>
-        <p v-if="error">{{ error }}</p>
-        <button type="submit">Se connecter</button>
-      </form>
-    </div>
-</template>
-<style scoped>
+  <div class="login">
+    <form @submit.prevent="onSubmit" class="login-card">
+      <h2>Connexion</h2>
 
-p {
-  color: red;
-  font-size: 15px;
+      <div class="form-group">
+        <label>Email</label>
+        <input v-model="email" type="email" required />
+      </div>
+
+      <div class="form-group">
+        <label>Mot de passe</label>
+        <input v-model="password" type="password" required />
+      </div>
+
+      <p v-if="error" class="error-message">{{ error }}</p>
+
+      <button type="submit" class="submit-btn">Se connecter</button>
+    </form>
+  </div>
+</template>
+
+<style scoped>
+.login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 60px 20px;
+  min-height: 100vh;
+  min-width: 100vw;
+  background-color: #f5f5f5;
 }
 
-.modal-content {
-
+.login-card {
   background: white;
-  box-shadow: 1px 1px 1px 1px rgb(234, 234, 234);
-  padding: 2rem;
-  border-radius: 10px;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  width: 100%;
+}
+
+.login-card h2 {
   text-align: center;
-  width: 40rem;
-  height: 40rem;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 16px;
+}
+
+label {
+  margin-bottom: 6px;
+  font-weight: 500;
+  color: #444;
 }
 
 input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 15px;
+  transition: border-color 0.3s ease;
+}
+
+input:focus {
+  outline: none;
+  border-color: #ff8800;
+  box-shadow: 0 0 5px rgba(255, 136, 0, 0.3);
+}
+
+.error-message {
+  color: red;
+  margin-bottom: 12px;
+  font-size: 14px;
+  text-align: center;
+}
+
+.submit-btn {
   width: 100%;
-  margin: 1rem 0;
-  padding: 0.5rem;
-  background-color: rgb(227, 227, 227);
-  border: none;
-}
-
-button {
-  padding: 0.5rem 1rem;
-  background-color: black;
+  padding: 12px;
+  background-color: #ff8800;
   color: white;
+  font-weight: bold;
   border: none;
-  border-radius: 20px;
-  width: 50%;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.25s ease;
 }
 
-button:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+.submit-btn:hover {
+  background-color: #e67300;
 }
 </style>
-
