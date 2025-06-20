@@ -1,6 +1,7 @@
 <template>
   <div class="top-navbar">
     <button class="login-btn" @click="login">Se connecter</button>
+    <button class="register-btn" @click="register">Se connecter</button>
     <button v-if="userStore.isAuthenticated" @click="logout">Déconnexion</button>
     <button @click="$emit('open-cart')" class="cart-button">
       🛒 <span class="badge">{{ cartCount }}</span>
@@ -20,6 +21,10 @@ const router = useRouter();
 const logout = () => {
   userStore.logout();
   router.push('/login');
+};
+const register = () => {
+  userStore.register();
+  router.push('/register');
 };
 const login = () => {
   router.push('/login');
@@ -71,6 +76,17 @@ const props = defineProps<{
   border-radius: 20px;
   width: 50%;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.register-btn {
+  padding: 0.5rem 1rem;
+  background-color: white;
+  color: black;
+  border: 1px solid black;
+  border-radius: 20px;
+  width: 50%;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  margin-left: 2%;
+  width: 15%;
 }
 button:hover {
   transform: translateY(-4px);
