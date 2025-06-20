@@ -99,4 +99,19 @@ class Burger
 
         return $this;
     }
+  public function toArray(): array 
+{
+    $image = $this->getImage();
+    if (!str_starts_with($image, '/uploads')) {
+        $image = '/images/' . ltrim($image, '/');
+    }
+    return [
+        'id' => $this->getId(),
+        'name' => $this->getName(),
+        'description' => $this->getDescription(),
+        'price' => $this->getPrice(),
+        'type' => $this->getType(),
+        'image' => $image,
+    ];
+}
 }

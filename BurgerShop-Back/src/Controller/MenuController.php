@@ -16,7 +16,7 @@ final class MenuController extends AbstractController
     public function apiMenu(?string $type, BurgerRepository $repo): JsonResponse
     {
         $burgers = $type ? $repo->findBy(['type' => $type]) : $repo->findAll();
-        return $this->json($burgers);
+        return $this->json(array_map(fn($b) => $b->toArray(), $burgers));
     }
 
     #[Route('/add-burger', name: 'add_burger')]
@@ -51,9 +51,9 @@ final class MenuController extends AbstractController
             ['Mushroom Veggie', 'veggie', 6.29],
         ];
 
-        foreach ($burgersData as [$name, $type, $price]) {
+        foreach ($burgersData as [$name, $type, $price, $image]) {
             $burger = new Burger();
-            $burger->setImage('https://www.gardengourmet.be/sites/default/files/recipes/472a6839884de87337ab731dff8b9a48_200828_MEDIAMONKS_GG_Vegetarian.jpg');
+            $burger->setImage('/images/' . $image);
             $burger->setName($name);
             $burger->setType($type);
             $burger->setDescription('Can I get some burgers ?');
