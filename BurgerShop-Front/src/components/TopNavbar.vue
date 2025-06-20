@@ -57,7 +57,7 @@ const props = defineProps<{
   cursor: pointer;
 } 
 .cart-button{
-  margin-left: 90%;
+  margin-left: 50%;
 }
 .badge {
   position: absolute;

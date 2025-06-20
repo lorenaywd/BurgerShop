@@ -44,11 +44,16 @@ const routes = [
     path: '/burgers/:type',
     name: 'Burgers',
     component: HomePage,
-  }
+  },
   // { path: '/history',
   //   component: HistoryPage, 
   //   meta: { requiresAuth: true } 
   // },
+{
+  path: '/confirmation:orderId',
+  name: 'Confirmation',
+  component: Confirmation,
+}
 ];
 
 const router = createRouter({

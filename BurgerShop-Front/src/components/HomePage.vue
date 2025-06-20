@@ -1,16 +1,20 @@
 <script setup lang="ts">
-import { onMounted, ref, watch } from 'vue';
+import { onMounted, ref, watch, watchEffect } from 'vue';
 import NavBar from './NavBar.vue';
 import axios from 'axios';
 import { useRoute } from 'vue-router';
-// import WelcomeModal from './Modal.vue';
-import TopNavBar from './TopNavbar.vue';
-import { useRouter } from 'vue-router'
 
 const route = useRoute();
-const items = ref([]);
-const router = useRouter()
-const prenom = ref('');
+const items = ref<Burger[]>([]);
+
+type Burger = {
+  id: number;
+  name: string;
+  image: string;
+  description: string;
+  type: string;
+  price: number;
+};
 
 const fetchMenu = async () => {
   const type = route.params.type;
@@ -29,17 +33,25 @@ const fetchMenu = async () => {
   }
 };
 
+
 onMounted(fetchMenu);
+
 watch(() => route.params.type, fetchMenu);
 
+import WelcomeModal from './Modal.vue';
+import TopNavBar from './TopNavbar.vue';
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+const prenom = ref('');
+
 onMounted(() => {
-  const stored = localStorage.getItem('burgerShopUser');
-  if (stored) {
-    const data = JSON.parse(stored);
-    if (data.name && Date.now() < data.expiresAt) {
-      prenom.value = data.name;
-    }
-  }
+  const saved = JSON.parse(localStorage.getItem('cart') || '[]');
+  const totalCount = saved.reduce((acc: number, item: any) => {
+    const quantity = Number(item.quantity) || 1;
+    return acc + quantity;
+  }, 0);
+  cartCount.value = totalCount;
 });
 
 const handleNameSet = (name: string) => {
@@ -50,36 +62,21 @@ const handleOpenCart = () => {
   router.push('/order')
 }
 
-const cart = ref<any[]>([]);
-
-function addToCart(item) {
-  const found = cart.value.find(i => i.id === item.id);
-  if (found) {
-    found.quantity += 1;
-  } else {
-    cart.value.push({ ...item, quantity: 1 });
-  }
-  cartCount.value++;
-}
-
-const isSidebarOpen = ref(false);
-
-const toggleSidebar = () => {
-  isSidebarOpen.value = !isSidebarOpen.value;
+const addToCart = (burger: Burger) => {
+  const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+  cart.push(burger);
+  cartCount.value++
+  localStorage.setItem('cart', JSON.stringify(cart));
 };
-
 
 </script>
 
 <template>
+  <!-- Affichage de la modale  -->
   <!-- <WelcomeModal @name-set="handleNameSet" /> -->
   <TopNavBar :cartCount="cartCount" @open-cart="handleOpenCart" />
-  <!-- Bouton menu mobile -->
-  <button class="hamburger" @click="toggleSidebar">
-    ☰
-  </button>
   <div class="main-container">
-    <div class="sidebar" :class="{ open: isSidebarOpen }">
+    <div class="sidebar">
       <NavBar />
     </div>
     <div class="content">
@@ -99,7 +96,7 @@ const toggleSidebar = () => {
           <div class="quantity-row">
           </div>
 
-          <button class="commander" @click="addToCart">Commander</button>
+          <button class="commander" @click="addToCart(item)">Commander</button>
         </div>
       </div>
     </div>
@@ -107,11 +104,10 @@ const toggleSidebar = () => {
 </template>
 
 <style>
-
 .burger-list {
   display: flex;
   flex-wrap: wrap; 
-  justify-content: flex-start;          
+  justify-content: space-between;           
   gap: 16px;   
   width: 80%;                
 }
@@ -122,28 +118,15 @@ const toggleSidebar = () => {
   padding: 8px; 
   width: calc(33.333% - 11px);  
   box-sizing: border-box;
-  height: 400px;
-   /* border: 1px solid #ccc;  */
 }
-/* .card h3, .card p {
-  margin: 0 0 8px 0;
-  flex-grow: 1; 
-} */
-/* .card-content > h3,
-.card-content > p {
-  margin: 0 0 8px 0;
-} */
+
 .card-img {
-  height: 200px;
   max-width: 100%;
-  /* height: auto;      
-  display: block;  */
-  object-fit: cover;
-  flex-shrink: 0;
+  height: auto;      
+  display: block; 
   width: 80%;
   border-radius: 8px;
   height: 25rem;
-  margin-bottom: 8px;
 }
 
 .main-container {
@@ -152,9 +135,6 @@ const toggleSidebar = () => {
   width: 100vw;
    margin-top: 80px;
   /* background-color: #EDE8D0; */
-}
-.sidebar {
-  transition: transform 0.3s ease;
 }
 
 .sidebar {
@@ -167,17 +147,6 @@ const toggleSidebar = () => {
   /* background-color: #fff;  */
   z-index: 1000; 
   margin-top: 4%;
-}
-.hamburger {
-  display: none;
-  position: fixed;
-  top: 20px;
-  left: 20px;
-  font-size: 24px;
-  background: none;
-  border: none;
-  z-index: 1100;
-  cursor: pointer;
 }
 
 .content {
@@ -222,67 +191,5 @@ body {
   padding: 5px 10px;
   cursor: pointer;
   font-size: 16px;
-}
-
-/* 🎯 RESPONSIVE DESIGN */
-@media (max-width: 1024px) {
-  .card {
-    flex: 1 1 calc(50% - 11px);
-  }
-
-  .sidebar {
-    position: relative;
-    width: 100%;
-    height: auto;
-    margin-top: 0;
-  }
-
-  .main-container {
-    flex-direction: column;
-    margin-top: 60px;
-  }
-
-  .content {
-    margin-left: 0;
-    width: 100%;
-  }
-}
-@media (max-width: 768px) {
-  .hamburger {
-    display: block;
-  }
-
-  .sidebar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    background-color: white;
-    width: 250px;
-    height: 100vh;
-    transform: translateX(-100%);
-    z-index: 1000;
-    box-shadow: 2px 0 5px rgba(0,0,0,0.3);
-  }
-
-  .sidebar.open {
-    transform: translateX(0);
-  }
-
-  .main-container {
-    margin-top: 60px;
-    flex-direction: column;
-  }
-
-  .content {
-    margin-left: 0 !important;
-    padding: 16px;
-    width: 100%;
-  }
-}
-
-@media (max-width: 600px) {
-  .card {
-    flex: 1 1 100%;
-  }
 }
 </style>
